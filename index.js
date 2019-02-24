@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { createStore } from "redux";
 import { Provider, connect } from "react-redux";
+import rust from "./crate/Cargo.toml";
 
 // ACTIONS
 const actionTypes = {
   INCREMENT: "[WASM] Increment",
   DECREMENT: "[WASM] Decrement",
-  SET_NAME: "[WASM] Set Name"
+  SET_NAME: "[WASM] Set Name",
+  ALERT: "[WASM] Alert",
+  RESET_ALERT: "[WASM] Reset alert"
 };
 
 const increment = () => {
@@ -20,22 +23,37 @@ const setName = name => {
   return { type: actionTypes.SET_NAME, payload: name };
 };
 
+const redAlert = name => {
+  return { type: actionTypes.ALERT, payload: name };
+};
+
+const resetAlert = () => {
+  return { type: actionTypes.RESET_ALERT };
+};
+
 // STORE
 const initialState = {
   name: "Jensen",
-  count: 0
+  count: 0,
+  alert: null
 };
 
 const wasmReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.INCREMENT: {
-      return { ...state, count: state.count + 1 };
+      return { ...state, count: rust.inc(state.count) };
     }
     case actionTypes.DECREMENT: {
-      return { ...state, count: state.count - 1 };
+      return { ...state, count: rust.dec(state.count) };
     }
     case actionTypes.SET_NAME: {
-      return { ...state, name: action.payload };
+      return { ...state, name: rust.greet(action.payload) };
+    }
+    case actionTypes.ALERT: {
+      return { ...state, alert: action.payload };
+    }
+    case actionTypes.RESET_ALERT: {
+      return { ...state, alert: null };
     }
     default: {
       return state;
@@ -45,16 +63,30 @@ const wasmReducer = (state = initialState, action) => {
 const store = createStore(wasmReducer, initialState);
 
 // COMPONENT
-const mapStateToProps = state => {
+const mapStateToProps = ({ count, name, alert }) => {
   return {
-    count: state.count,
-    name: state.name
+    count,
+    name,
+    alert
   };
 };
 
-const mapDispatchToProps = { increment, decrement, setName };
+const mapDispatchToProps = {
+  increment,
+  decrement,
+  setName,
+  redAlert,
+  resetAlert
+};
 
 class AppComponent extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.alert !== null) {
+      rust.red_alert(nextProps.alert);
+      this.props.resetAlert();
+    }
+  }
+
   render() {
     return (
       <div>
@@ -67,6 +99,9 @@ class AppComponent extends Component {
           defaultValue={this.props.name}
           onInput={e => this.props.setName(e.target.value)}
         />
+        <button onClick={() => this.props.redAlert(this.props.name)}>
+          Red alert!
+        </button>
       </div>
     );
   }
