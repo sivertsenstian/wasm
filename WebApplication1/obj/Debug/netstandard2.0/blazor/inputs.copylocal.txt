@@ -1,0 +1,7 @@
+/home/sivertsenstian/.nuget/packages/microsoft.aspnetcore.blazor/0.8.0-preview-19104-04/lib/netstandard2.0/Microsoft.AspNetCore.Blazor.dll
+/home/sivertsenstian/.nuget/packages/microsoft.aspnetcore.components/3.0.0-preview-19075-0444/lib/netstandard2.0/Microsoft.AspNetCore.Components.dll
+/home/sivertsenstian/.nuget/packages/microsoft.aspnetcore.components.browser/3.0.0-preview-19075-0444/lib/netstandard2.0/Microsoft.AspNetCore.Components.Browser.dll
+/home/sivertsenstian/.nuget/packages/microsoft.extensions.dependencyinjection/3.0.0-preview.19074.2/lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll
+/home/sivertsenstian/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/3.0.0-preview.19074.2/lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/home/sivertsenstian/.nuget/packages/microsoft.jsinterop/3.0.0-preview.19074.2/lib/netstandard2.0/Microsoft.JSInterop.dll
+/home/sivertsenstian/.nuget/packages/mono.webassembly.interop/0.8.0-preview1-20181126.4/lib/netstandard2.0/Mono.WebAssembly.Interop.dll
