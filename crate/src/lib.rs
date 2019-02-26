@@ -2,6 +2,12 @@ extern crate wasm_bindgen;
 extern crate web_sys;
 use wasm_bindgen::prelude::*;
 
+macro_rules! log {
+    ( $( $t:tt )* ) => {
+        web_sys::console::log_1(&format!( $( $t )* ).into());
+    }
+}
+
 #[wasm_bindgen]
 extern "C" {
     fn alert(s: &str);
@@ -14,6 +20,7 @@ pub fn greet(name: &str) -> String {
 
 #[wasm_bindgen]
 pub fn inc(a: i32) -> i32 {
+    log!("Hello from rust! incrementing: {}", a);
     return a + 1;
 }
 
