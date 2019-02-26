@@ -3,7 +3,7 @@ extern crate web_sys;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-extern {
+extern "C" {
     fn alert(s: &str);
 }
 
@@ -24,5 +24,29 @@ pub fn dec(a: i32) -> i32 {
 
 #[wasm_bindgen]
 pub fn red_alert(name: &str) -> () {
-    alert(name);  
+    alert(name);
+}
+
+#[wasm_bindgen]
+pub struct Action {
+    internal: String,
+}
+
+#[wasm_bindgen]
+impl Action {
+    #[wasm_bindgen(constructor)]
+    pub fn new(val: &str) -> Action {
+        Action {
+            internal: val.to_string(),
+        }
+    }
+
+    pub fn type_(&self) -> String {
+        self.internal.to_string()
+    }
+}
+
+#[wasm_bindgen]
+pub fn increment() -> Action {
+    return Action::new("[RUST] Increment");
 }

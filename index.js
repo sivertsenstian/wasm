@@ -6,6 +6,7 @@ import rust from "./crate/Cargo.toml";
 
 // ACTIONS
 const actionTypes = {
+  RUST_INCREMENT: "[RUST] Increment",
   INCREMENT: "[WASM] Increment",
   DECREMENT: "[WASM] Decrement",
   SET_NAME: "[WASM] Set Name",
@@ -40,6 +41,9 @@ const initialState = {
 
 const wasmReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.RUST_INCREMENT: {
+      return { ...state, count: rust.inc(state.count * 2) };
+    }
     case actionTypes.INCREMENT: {
       return { ...state, count: rust.inc(state.count) };
     }
